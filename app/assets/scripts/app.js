@@ -1,4 +1,5 @@
 import { ApiActions } from "./apiActions.js";
+import Favorites from "./favorites.js";
 
 const API_KEY = "api_key=53f0b465d661ac1da90479eaf8520de0";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -33,7 +34,7 @@ export default class App extends ApiActions {
   }
 
   showMovieInModal(movie) {
-    const { original_title: title, overview, release_date, vote_average, genres, poster_path} = movie;
+    const { original_title: title, overview, release_date, vote_average, genres, poster_path, id} = movie;
     const year = release_date.substring(0, 4);
     const movieGenres = genres.reduce((accumulator, currentValue) => {
         return accumulator == '' ?
@@ -51,10 +52,10 @@ export default class App extends ApiActions {
                 <p class="text-zinc-400 text-sm text-center mt-2">${movieGenres}</p>
                 <div class="flex justify-center items-center gap-1 mt-3">
                     <i class="fa-regular fa-star text-yellow-400"></i>
-                    <span class="text-zinc-200">${vote_average}</span>
+                    <span class="text-zinc-200">${vote_average.toFixed(2)}</span>
                 </div>
 
-                <button class="block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150">add favorites</button>
+                <button data-movie-id="${id}" id="addFavorites" class="block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150">add favorites</button>
             </div>
         </div>
     `;
@@ -68,7 +69,14 @@ export default class App extends ApiActions {
     closeButton.addEventListener('click', (event)=> {
         //const bgModal = event.target.closest('#bgModal');
         containerModal.remove();
-    }),
+    });
+
+    //TODO: trocar lógica de lugar
+    const addToFavoritesButton = containerModal.querySelector('#addFavorites');
+    addToFavoritesButton.onclick = (event) => {
+      const movieId = event.target.dataset.movieId;
+      Favorites.add(movieId);
+    }
     
 
     //TODO: pesquisar diferença entre append e appendChild

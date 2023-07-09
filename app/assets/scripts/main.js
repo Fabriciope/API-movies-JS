@@ -5,7 +5,7 @@ const loading = document.getElementById('loading');
 const textAlert = document.getElementById('alert');
 
 
-
+//TODO: revisar projeto;
 
 document.forms[0].addEventListener('submit', (event) => {
     event.preventDefault();
