@@ -11,14 +11,13 @@ const loading = document.getElementById("loading");
 const textAlert = document.getElementById("alert");
 const containerFoundMovies = document.getElementById("containerFoundMovies");
 
-const ERROR_MESSAGE_TYPE = "ERROR";
-const SUCCESS_MESSAGE_TYPE = "SUCCESS";
-
 export default class App extends ApiActions {
-
-    searchMovie(search) {
-        this.fetchMovie(search);
-    }
+  searchMovie(search) {
+    this.fetchMovie(search).then((foundMovies) => {
+      if(foundMovies)
+       this.showFoundMovies(foundMovies);
+    });
+  }
 
   showFoundMovies(foundMovies) {
     containerFoundMovies.innerHTML = "";
@@ -34,19 +33,30 @@ export default class App extends ApiActions {
   }
 
   showMovieInModal(movie) {
-    const { original_title: title, overview, release_date, vote_average, genres, poster_path, id} = movie;
+    const {
+      original_title: title,
+      overview,
+      release_date,
+      vote_average,
+      genres,
+      poster_path,
+      id,
+    } = movie;
     const year = release_date.substring(0, 4);
     const movieGenres = genres.reduce((accumulator, currentValue) => {
-        return accumulator == '' ?
-            currentValue.name :
-            `${accumulator}, ${currentValue.name}`;
-    }, '');
+      return accumulator == ""
+        ? currentValue.name
+        : `${accumulator}, ${currentValue.name}`;
+    }, "");
     const modal = `
-        <div class="relative flex justify-between items-center w-[80%] h-[450px] mx-auto rounded-lg shadow-xl overflow-hidden bg-slate-800">
-            <i id="closeButton" class="fa-solid fa-xmark absolute top-3 right-3 text-3xl text-slate-950/80 hover:text-red-600 transition duration-200 cursor-pointer"></i>
-            <img class="h-full shadow-xl shadow-gray-900" src="${IMG_URL}${poster_path}" alt="">
-            <div class=" w-[100%] p-8">
-                <p class="text-right my-3 text-zinc-200">Year: ${year}</p>
+      <div class="relative flex justify-between items-center w-[80%] max-w-[1100px] sm:h-[480px] mx-auto rounded-lg shadow-xl overflow-hidden bg-slate-800">
+        <i id="closeButton" class="fa-solid fa-xmark absolute top-3 right-3 text-3xl text-slate-950/80 hover:text-red-600 transition duration-200 cursor-pointer"></i>
+        <div class="h-full w-[40%] hidden md:block">
+            <img class="h-full w-full max-w-[310px] object-cover shadow-xl shadow-gray-900" src="${IMG_URL}${poster_path}" alt="">
+        </div>
+        <div class="h-full w-full md:w-[60%]  p-4 flex flex-col justify-between ">
+            <div>
+                <p class="text-left my-3 text-zinc-200">Year: ${year}</p>
                 <h3 class="text-zinc-100 font-semibold text-2xl text-center mb-3">${title}</h3>
                 <p class="text-zinc-300 font-normal text-center text-sm mb-1">${overview}</p>
                 <p class="text-zinc-400 text-sm text-center mt-2">${movieGenres}</p>
@@ -54,33 +64,45 @@ export default class App extends ApiActions {
                     <i class="fa-regular fa-star text-yellow-400"></i>
                     <span class="text-zinc-200">${vote_average.toFixed(2)}</span>
                 </div>
-
-                <button data-movie-id="${id}" id="addFavorites" class="block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150">add favorites</button>
             </div>
+
+            <button id="addFavorites" data-movie-id="${id}" class="block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150">add favorites</button>
         </div>
+    </div>
     `;
-    const containerModal = document.createElement('div');
-    containerModal.classList.add('fixed', 'top-0', 'right-0', 'w-screen', 'h-screen', 'flex', 'justify-center', 'items-center', 'bg-gray-950/70', 'backdrop-blur-sm');
+
+    const containerModal = document.createElement("div");
+    containerModal.classList.add(
+      "fixed",
+      "top-0",
+      "right-0",
+      "w-screen",
+      "h-screen",
+      "flex",
+      "justify-center",
+      "items-center",
+      "bg-gray-950/70",
+      "backdrop-blur-sm"
+    );
     //containerModal.setAttribute('id', 'bgModal');
     containerModal.innerHTML = modal;
 
     //TODO: trocar lógica de lugar
-    const closeButton = containerModal.querySelector('#closeButton');
-    closeButton.addEventListener('click', (event)=> {
-        //const bgModal = event.target.closest('#bgModal');
-        containerModal.remove();
+    const closeButton = containerModal.querySelector("#closeButton");
+    closeButton.addEventListener("click", (event) => {
+      //const bgModal = event.target.closest('#bgModal');
+      containerModal.remove();
     });
 
     //TODO: trocar lógica de lugar
-    const addToFavoritesButton = containerModal.querySelector('#addFavorites');
+    const addToFavoritesButton = containerModal.querySelector("#addFavorites");
     addToFavoritesButton.onclick = (event) => {
       const movieId = event.target.dataset.movieId;
       Favorites.add(movieId);
-    }
-    
+    };
 
     //TODO: pesquisar diferença entre append e appendChild
-    document.body.appendChild(containerModal)
+    document.body.appendChild(containerModal);
   }
 
   createBoxMovie(movie) {
@@ -128,4 +150,4 @@ export default class App extends ApiActions {
   }
 }
 
-export const app = new App;
+export const app = new App();

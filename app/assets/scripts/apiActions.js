@@ -29,10 +29,10 @@ export class ApiActions {
                 throw new Error(`Not found movie for search: ${search}`);
             }
 
-           this.showFoundMovies(foundMovies.results);
+            return foundMovies.results
         } catch(error) {
             makeErrorMessage(`Error: ${error.message}`);
-            return;
+            return false;
         }
     }
 

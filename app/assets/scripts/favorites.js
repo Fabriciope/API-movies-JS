@@ -22,7 +22,7 @@ class Favorites {
             movieId
         ]));
 
-        // console.log(this.all());
+        console.log(this.all());
         //TODO: exibir mensagem de sucesso;
     }
 
