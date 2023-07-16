@@ -8,3 +8,26 @@ html {
     @apply font-montserrat;
 }
 
+body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  
+body::-webkit-scrollbar-track {
+@apply bg-transparent
+}
+
+body::-webkit-scrollbar-thumb {
+@apply bg-slate-900 shadow rounded-full
+}
+
+#containerFavoritesMovies::-webkit-scrollbar  {
+    @apply w-2
+}
+
+#containerFavoritesMovies::-webkit-scrollbar-track  {
+    @apply bg-transparent
+}
+
+#containerFavoritesMovies::-webkit-scrollbar-thumb {
+    @apply bg-slate-900 shadow rounded-full
+}

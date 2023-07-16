@@ -29,8 +29,8 @@ class Favorites {
           <span class="absolute animate-ping -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>
           <span class="absolute  -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>  
         `;
-
-        makeSuccessMessage('Movie added to favorites successfully');
+        
+        makeSuccessMessage('Movie added to favorites');
     }
     
     all() {
@@ -39,6 +39,7 @@ class Favorites {
     
     clear() {
         localStorage.clear();
+        makeSuccessMessage('All movies removed successfully');
     }
     
     remove(movieId) {
@@ -47,6 +48,7 @@ class Favorites {
         favoritesMovies.splice(removalIndex, 1);
         
         localStorage.setItem('favoritesMovies', JSON.stringify(favoritesMovies));
+        makeSuccessMessage('Successfully removed movie');
     }
 }
 

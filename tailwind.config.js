@@ -7,7 +7,7 @@ module.exports = {
         montserrat: ['Montserrat', 'sans-serif']
       },
       gridTemplateColumns: {
-        'main': 'repeat(auto-fit, minmax(200px, 30%))',
+        'main': 'repeat(auto-fit, minmax(300px, 24%))',
       }
     },
   },
