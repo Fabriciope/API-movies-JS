@@ -5,11 +5,18 @@ class Favorites {
 
         const favoritesMovies = this.all();
         
-        
         if(!favoritesMovies) {
             localStorage.setItem('favoritesMovies', JSON.stringify([
                 movieId
             ]));
+            const favoritesMoviesButton = document.getElementById('seeFavoritesMovies');
+            favoritesMoviesButton.innerHTML = `
+              My favorites movies
+              <span class="absolute animate-ping -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>
+              <span class="absolute  -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>  
+            `;
+            
+            makeSuccessMessage('Movie added to favorites');
             return;
         }
         
@@ -29,16 +36,22 @@ class Favorites {
           <span class="absolute animate-ping -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>
           <span class="absolute  -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>  
         `;
-
-        makeSuccessMessage('Movie added to favorites successfully');
+        
+        makeSuccessMessage('Movie added to favorites');
     }
     
     all() {
-        return JSON.parse(localStorage.getItem('favoritesMovies'));
+        const favoritesMovies = JSON.parse(localStorage.getItem('favoritesMovies'));
+        if(favoritesMovies.length > 0) {
+            return favoritesMovies;
+        }
+
+        return undefined;
     }
     
     clear() {
         localStorage.clear();
+        makeSuccessMessage('All movies removed successfully');
     }
     
     remove(movieId) {
@@ -47,6 +60,7 @@ class Favorites {
         favoritesMovies.splice(removalIndex, 1);
         
         localStorage.setItem('favoritesMovies', JSON.stringify(favoritesMovies));
+        makeSuccessMessage('Successfully removed movie');
     }
 }
 

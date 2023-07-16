@@ -17,10 +17,14 @@ function createBoxAlert() {
 
 function clearMessages() {
     const boxAlert = document.getElementById('alert');
-    boxAlert.remove();
+    if(boxAlert) 
+        boxAlert.remove();
+    
 }
 
 export function makeErrorMessage(message) {
+    clearMessages();
+
     const boxAlert = createBoxAlert();
     boxAlert.id = 'alert';
     boxAlert.classList.add('bg-red-600');
@@ -32,6 +36,8 @@ export function makeErrorMessage(message) {
 }
 
 export function makeSuccessMessage(message) {
+    clearMessages()
+
     const boxAlert = createBoxAlert();
     boxAlert.id = 'alert';
     boxAlert.classList.add('bg-green-600');

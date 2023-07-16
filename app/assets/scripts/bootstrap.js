@@ -4,6 +4,7 @@ const inputSearch = document.getElementById('search');
 const loading = document.getElementById('loading');
 const btnSeeFavoritesMovies = document.getElementById('seeFavoritesMovies');
 
+app.showPopularMovies();
 
 document.forms[0].addEventListener('submit', (event) => {
     event.preventDefault();
@@ -24,5 +25,7 @@ btnSeeFavoritesMovies.onclick = () => {
     btnSeeFavoritesMovies.innerHTML = "My favorites movies";
     app.showFavoritesMovies();
 };
+
+
 
 
