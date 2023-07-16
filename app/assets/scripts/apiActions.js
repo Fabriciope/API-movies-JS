@@ -29,7 +29,7 @@ export class ApiActions {
                 throw new Error(`Not found movie for search: ${search}`);
             }
 
-            return foundMovies.results
+            return foundMovies.results;
         } catch(error) {
             makeErrorMessage(`Error: ${error.message}`);
             return false;
@@ -47,7 +47,7 @@ export class ApiActions {
                 throw new Error('invalid movie id');
             }
 
-            this.showMovieInModal(movie);
+            return movie;
         } catch (error) {
             makeErrorMessage(`Error: ${error.message}`);
             return;

@@ -33,6 +33,8 @@ class Favorites {
     clear() {
         localStorage.clear();
     }
+
+    remove()
 }
 
 export default new Favorites;
