@@ -1,3 +1,4 @@
+import { makeSuccessMessage, makeErrorMessage } from "./messages.js";
 
 class Favorites {
     add(movieId) {
@@ -13,8 +14,7 @@ class Favorites {
         }
         
         if(favoritesMovies.some( id => id === movieId)) {
-            //TODO: exibir mensagem;
-            console.log('filme já favoritado');
+            makeErrorMessage('The movie is already in the favorites list');
             return;
         }
 
@@ -23,7 +23,14 @@ class Favorites {
             movieId
         ]));
 
-        //TODO: exibir mensagem de sucesso;
+        const favoritesMoviesButton = document.getElementById('seeFavoritesMovies');
+        favoritesMoviesButton.innerHTML = `
+          My favorites movies
+          <span class="absolute animate-ping -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>
+          <span class="absolute  -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>  
+        `;
+
+        makeSuccessMessage('Movie added to favorites successfully');
     }
     
     all() {

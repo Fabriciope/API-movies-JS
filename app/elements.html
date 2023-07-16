@@ -9,7 +9,7 @@
 </div>
 
 
-<div id="bgModal" class="fixed top-0 right-0 w-screen h-screen flex justify-center items-center bg-gray-950/70 backdrop-blur-sm">
+<div id="bgModal" class="fixed z-40 top-0 right-0 w-screen h-screen flex justify-center items-center bg-gray-950/70 backdrop-blur-sm">
     <div class="relative flex justify-between items-center w-[80%] max-w-[1100px] sm:h-[480px] mx-auto rounded-lg shadow-xl overflow-hidden bg-slate-800">
         <i id="closeButton" class="fa-solid fa-xmark absolute top-3 right-3 text-3xl text-slate-950/80 hover:text-red-600 transition duration-200 cursor-pointer"></i>
         <div class="h-full w-[40%] hidden md:block">
@@ -31,6 +31,8 @@
         </div>
     </div>
 </div>
+
+<div id="alert" class="fixed z-50 top-0 w-full py-1 text-center text-md font-medium text-zinc-100 shadow-md bg-red-600 bg-green-600">test</div>
 
 
 
@@ -56,7 +58,7 @@
 
 
 
-<div class="relative flex justify-between items-center w-[80%] max-w-[1100px] sm:h-[480px] mx-auto rounded-lg shadow-xl overflow-hidden bg-slate-800">
+<div class="relative z-40 flex justify-between items-center w-[80%] max-w-[1100px] sm:h-[480px] mx-auto rounded-lg shadow-xl overflow-hidden bg-slate-800">
     <i id="closeButton" class="fa-solid fa-xmark absolute top-3 right-3 text-3xl text-slate-950/80 hover:text-red-600 transition duration-200 cursor-pointer"></i>
     <div class="h-full w-[40%] hidden md:block">
         <img class="h-full w-full max-w-[310px] object-cover shadow-xl shadow-gray-900" src="${IMG_URL}${poster_path}" alt="">
@@ -75,3 +77,7 @@
         <button id="addFavorites" class="block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150">add favorites</button>
     </div>
 </div>
+
+
+<span class="absolute animate-ping -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>
+<span class="absolute  -top-2 -left-2 w-4 h-4 rounded-full bg-sky-900"></span>

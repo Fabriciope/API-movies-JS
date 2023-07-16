@@ -13,6 +13,7 @@ export default class App extends ApiActions {
     const favoritesMoviesModal = document.createElement("div");
     favoritesMoviesModal.classList.add(
       "fixed",
+      "z-40",
       "top-0",
       "right-0",
       "w-screen",
@@ -29,9 +30,8 @@ export default class App extends ApiActions {
           <h2 class="mt-3 mb-6 text-zinc-100 text-center text-xl font-normal">My favorites movies</h2>
         </div>
     `;
-    const containerFavoritesMovies = favoritesMoviesModal.querySelector(
-      "#contentFavoritesMovies"
-    );
+
+    const containerFavoritesMovies = favoritesMoviesModal.querySelector("#contentFavoritesMovies");
     containerFavoritesMovies.append(this.createContainerFavoritesMovies());
 
     const closeButton = favoritesMoviesModal.querySelector("#closeButton");
@@ -61,12 +61,12 @@ export default class App extends ApiActions {
             </div>
           `;
 
-          this.addActionToSeeMore(boxMovie);
           const removeMovieButton = boxMovie.getElementsByTagName("button")[0];
           removeMovieButton.addEventListener('click', ()=> {
             Favorites.remove(id);
             boxMovie.remove();
           });
+          this.addActionToSeeMore(boxMovie, true);
           container.prepend(boxMovie);
         }).catch(error => {
           console.log(error.message);
@@ -97,7 +97,7 @@ export default class App extends ApiActions {
     loading.classList.add("hidden");
   }
 
-  showMovieInModal(movie) {
+  showMovieInModal(movie, withoutAddFavorites) {
     const {
       original_title: title,
       overview,
@@ -117,6 +117,7 @@ export default class App extends ApiActions {
     const containerModal = document.createElement("div");
     containerModal.classList.add(
       "fixed",
+      "z-40",
       "top-0",
       "right-0",
       "w-screen",
@@ -136,7 +137,7 @@ export default class App extends ApiActions {
         <div class="h-full w-[40%] hidden md:block">
             <div class="h-full w-full max-w-[310px] object-cover shadow-xl">Without poster </div>
         </div>
-        <div class="h-full w-full md:w-[60%]  p-4 flex flex-col justify-between ">
+        <div id="containerInfoMovie" class="h-full w-full md:w-[60%]  p-4 flex flex-col justify-between ">
             <div>
                 <p class="text-left my-3 text-zinc-200">Year: ${year}</p>
                 <h3 class="text-zinc-100 font-semibold text-2xl text-center mb-3">${title}</h3>
@@ -144,13 +145,10 @@ export default class App extends ApiActions {
                 <p class="text-zinc-400 text-sm text-center mt-2">${movieGenres}</p>
                 <div class="flex justify-center items-center gap-1 mt-3">
                     <i class="fa-regular fa-star text-yellow-400"></i>
-                    <span class="text-zinc-200">${vote_average.toFixed(
-                      2
-                    )}</span>
+                    <span class="text-zinc-200">${vote_average.toFixed(2)}</span>
                 </div>
             </div>
 
-            <button id="addFavorites" data-movie-id="${id}" class="block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150">add favorites</button>
         </div>
     </div>
     `;
@@ -161,7 +159,7 @@ export default class App extends ApiActions {
           <div class="h-full w-[40%] hidden md:block">
               <img class="h-full w-full max-w-[310px] object-cover shadow-xl shadow-gray-900" src="${IMG_URL}${poster_path}" alt="">
           </div>
-          <div class="h-full w-full md:w-[60%]  p-4 flex flex-col justify-between ">
+          <div id="containerInfoMovie" class="h-full w-full md:w-[60%]  p-4 flex flex-col justify-between ">
               <div>
                   <p class="text-left my-3 text-zinc-200">Year: ${year}</p>
                   <h3 class="text-zinc-100 font-semibold text-2xl text-center mb-3">${title}</h3>
@@ -169,29 +167,36 @@ export default class App extends ApiActions {
                   <p class="text-zinc-400 text-sm text-center mt-2">${movieGenres}</p>
                   <div class="flex justify-center items-center gap-1 mt-3">
                       <i class="fa-regular fa-star text-yellow-400"></i>
-                      <span class="text-zinc-200">${vote_average.toFixed(
-                        2
-                      )}</span>
+                      <span class="text-zinc-200">${vote_average.toFixed(2)}</span>
                   </div>
               </div>
-  
-              <button id="addFavorites" data-movie-id="${id}" class="block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150">add favorites</button>
           </div>
       </div>
       `;
     }
-    containerModal.innerHTML = contentModal;
 
+    containerModal.innerHTML = contentModal;
     const closeButton = containerModal.querySelector("#closeButton");
     closeButton.addEventListener("click", () => {
       containerModal.remove();
     });
 
-    const addToFavoritesButton = containerModal.querySelector("#addFavorites");
-    addToFavoritesButton.onclick = (event) => {
-      const movieId = event.target.dataset.movieId;
-      Favorites.add(movieId);
-    };
+    if(!withoutAddFavorites) {
+      const containerInfoMovie = containerModal.querySelector('#containerInfoMovie')
+      const button  = document.createElement('button');
+      button.id = "addFavorites";
+      button.setAttribute('class', "block ml-auto mt-3 px-4 py-2 font-bold shadow-md rounded-md text-zinc-200 bg-sky-600 hover:bg-sky-500 transition duration-150");
+      button.dataset.movieId = id;
+      button.textContent = 'Add favorites';
+      containerInfoMovie.append(button);
+
+      button.onclick = (event) => {
+        const movieId = event.target.dataset.movieId;
+        Favorites.add(movieId);
+      };
+    }
+
+
 
     document.body.appendChild(containerModal);
   }
@@ -233,14 +238,14 @@ export default class App extends ApiActions {
     return boxMovie;
   }
 
-  addActionToSeeMore(boxMovie) {
+  addActionToSeeMore(boxMovie, withoutAddFavorites) {
     let button = boxMovie.querySelector("#buttonSeeMore");
     button.onclick = (event) => {
       const movieId = event.target.dataset.movieId;
       this.findMovieById(movieId)
       .then((movie) => {
         if(movie){
-          this.showMovieInModal(movie)
+          this.showMovieInModal(movie, withoutAddFavorites)
         }
       }).catch(error => console.log(error.message));
     };

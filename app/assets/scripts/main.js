@@ -2,16 +2,12 @@ import { app } from './App.js';
 
 const inputSearch = document.getElementById('search');
 const loading = document.getElementById('loading');
-const textAlert = document.getElementById('alert');
 const btnSeeFavoritesMovies = document.getElementById('seeFavoritesMovies');
 
-
-//TODO: revisar projeto;
 
 document.forms[0].addEventListener('submit', (event) => {
     event.preventDefault();
 
-    textAlert.textContent = '';
     loading.classList.remove('hidden');
     let movieSearch = String(inputSearch.value);
 
@@ -25,6 +21,7 @@ document.forms[0].addEventListener('submit', (event) => {
 });
 
 btnSeeFavoritesMovies.onclick = () => {
+    btnSeeFavoritesMovies.innerHTML = "My favorites movies";
     app.showFavoritesMovies();
 };
 
