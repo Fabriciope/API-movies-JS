@@ -15,9 +15,6 @@ const containerFoundMovies = document.getElementById('containerFoundMovies');
 
 export class ApiActions {
     async fetchMovie(movieSearch) {
-        // OLD API 
-        // const fetchPromise = await fetch(`https://www.omdbapi.com/?i=tt3896198&apikey=302eb14c&s=${search}`);
-
         try {
             let search = movieSearch.trim();
 
@@ -36,21 +33,22 @@ export class ApiActions {
         }
     }
 
-    async findMovieById(movieId) {
-        
+    async findMovieById(movieId) { 
         try {
-            const url = `${BASE_URL}/movie/${parseInt(movieId)}?${API_KEY}&append_to_response=videos,images`;
-            const movie = await fetch(url)
-            .then(data => data.json());
-
-            if(movie.success === false) {
-                throw new Error('invalid movie id');
+            if(movieId) {
+                const url = `${BASE_URL}/movie/${parseInt(movieId)}?${API_KEY}&append_to_response=videos,images`;
+                const fetchMovie = await fetch(url);
+                const movie = await fetchMovie.json();
+                
+                if(movie.success === false) {
+                    throw new Error('unexpected error');
+                }
+    
+                return movie;
             }
-
-            return movie;
         } catch (error) {
             makeErrorMessage(`Error: ${error.message}`);
-            return;
+            return false;
         }
 
 

@@ -1,4 +1,4 @@
-import { app } from './app.js';
+import { app } from './App.js';
 
 const inputSearch = document.getElementById('search');
 const loading = document.getElementById('loading');

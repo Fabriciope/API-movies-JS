@@ -4,6 +4,7 @@ class Favorites {
 
         const favoritesMovies = this.all();
         
+        
         if(!favoritesMovies) {
             localStorage.setItem('favoritesMovies', JSON.stringify([
                 movieId
@@ -22,19 +23,24 @@ class Favorites {
             movieId
         ]));
 
-        console.log(this.all());
         //TODO: exibir mensagem de sucesso;
     }
-
+    
     all() {
         return JSON.parse(localStorage.getItem('favoritesMovies'));
     }
-
+    
     clear() {
         localStorage.clear();
     }
-
-    remove()
+    
+    remove(movieId) {
+        const favoritesMovies = this.all();
+        const removalIndex = favoritesMovies.indexOf(movieId.toString());
+        favoritesMovies.splice(removalIndex, 1);
+        
+        localStorage.setItem('favoritesMovies', JSON.stringify(favoritesMovies));
+    }
 }
 
 export default new Favorites;

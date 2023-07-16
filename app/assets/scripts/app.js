@@ -1,5 +1,5 @@
-import { ApiActions } from "./apiActions.js";
-import Favorites from "./favorites.js";
+import { ApiActions } from "./ApiActions.js";
+import Favorites from "./Favorites.js";
 
 const API_KEY = "api_key=53f0b465d661ac1da90479eaf8520de0";
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -9,9 +9,8 @@ const IMG_URL = "https://image.tmdb.org/t/p/w500";
 const loading = document.getElementById("loading");
 
 export default class App extends ApiActions {
-  
   showFavoritesMovies() {
-    const favoritesMoviesModal = document.createElement('div');
+    const favoritesMoviesModal = document.createElement("div");
     favoritesMoviesModal.classList.add(
       "fixed",
       "top-0",
@@ -23,16 +22,18 @@ export default class App extends ApiActions {
       "items-center",
       "bg-gray-950/70",
       "backdrop-blur-sm"
-      );
-      favoritesMoviesModal.innerHTML = `
+    );
+    favoritesMoviesModal.innerHTML = `
         <div id="contentFavoritesMovies" class="p-7 fixed top-10 left-1/2 -translate-x-1/2 rounded shadow-lg bg-slate-800">
           <i id="closeButton" class="fa-solid fa-xmark absolute top-3 right-3 text-3xl text-slate-950/80 hover:text-red-600 transition duration-200 cursor-pointer"></i>
           <h2 class="mt-3 mb-6 text-zinc-100 text-center text-xl font-normal">My favorites movies</h2>
         </div>
     `;
-    const containerFavoritesMovies = favoritesMoviesModal.querySelector('#contentFavoritesMovies');
+    const containerFavoritesMovies = favoritesMoviesModal.querySelector(
+      "#contentFavoritesMovies"
+    );
     containerFavoritesMovies.append(this.createContainerFavoritesMovies());
-    
+
     const closeButton = favoritesMoviesModal.querySelector("#closeButton");
     closeButton.addEventListener("click", () => {
       favoritesMoviesModal.remove();
@@ -42,26 +43,34 @@ export default class App extends ApiActions {
   }
 
   createContainerFavoritesMovies() {
-    const container = document.createElement('div');
-    container.classList.add('flex', 'flex-col', 'gap-3');
+    const container = document.createElement("div");
+    container.classList.add("flex", "flex-col", "gap-3");
 
-    Favorites.all().forEach( movieId => {
+    Favorites.all().forEach((movieId) => {
       this.findMovieById(movieId)
-      .then(movie => {
-        const { original_title: title, id } = movie;
-        let boxMovie = document.createElement('div');
-        boxMovie.innerHTML += `
-        <div data-movie-id="${id}" id="buttonSeeMore" class="py-2 px-6 flex justify-between items-center gap-x-16 group rounded-md shadow cursor-pointer transition duration-150 bg-slate-700/70 hover:bg-slate-700/95">
-          <div class="flex justify-center items-center gap-2">
-            <h4 data-movie-id="${id}" class="max-w-[400px] text-zinc-100 font-normal truncate">${title}</h4>
-            <i data-movie-id="${id}" class="fa-solid fa-arrow-right text-sm text-sky-500 h-full group-hover:text-sky-400 transition duration-150"></i>
-          </div>
-          <button class="py-1 px-3 rounded text-red-600 hover:bg-gray-200/10"><i class="fa-solid fa-trash-can"></i></button>
-        </div>
-        `;
-        this.addActionToSeeMore(boxMovie);
-        container.prepend(boxMovie);
-      });
+        .then((movie) => {
+          const { original_title: title, id } = movie;
+          let boxMovie = document.createElement("div");
+          boxMovie.innerHTML = `
+            <div data-movie-id="${id}" id="buttonSeeMore" class="py-2 px-6 flex justify-between items-center gap-x-16 group rounded-md shadow cursor-pointer transition duration-150 bg-slate-700/70 hover:bg-slate-700/95">
+              <div class="flex justify-center items-center gap-2">
+                <h4 data-movie-id="${id}" class="max-w-[400px] text-zinc-100 font-normal truncate">${title}</h4>
+                <i data-movie-id="${id}" class="fa-solid fa-arrow-right text-sm text-sky-500 h-full group-hover:text-sky-400 transition duration-150"></i>
+              </div>
+              <button class="py-1 px-3 rounded text-red-600 hover:bg-gray-200/10"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+          `;
+
+          this.addActionToSeeMore(boxMovie);
+          const removeMovieButton = boxMovie.getElementsByTagName("button")[0];
+          removeMovieButton.addEventListener('click', ()=> {
+            Favorites.remove(id);
+            boxMovie.remove();
+          });
+          container.prepend(boxMovie);
+        }).catch(error => {
+          console.log(error.message);
+        });
     });
 
     return container;
@@ -69,13 +78,14 @@ export default class App extends ApiActions {
 
   searchMovie(search) {
     this.fetchMovie(search).then((foundMovies) => {
-      if(foundMovies)
-       this.showFoundMovies(foundMovies);
+      if (foundMovies) this.showFoundMovies(foundMovies);
     });
   }
 
   showFoundMovies(foundMovies) {
-    const containerFoundMovies = document.getElementById("containerFoundMovies");
+    const containerFoundMovies = document.getElementById(
+      "containerFoundMovies"
+    );
     containerFoundMovies.innerHTML = "";
 
     foundMovies.forEach((movie) => {
@@ -119,7 +129,7 @@ export default class App extends ApiActions {
     );
 
     let contentModal;
-    if(poster_path === null) {
+    if (poster_path === null) {
       contentModal = `
       <div class="relative flex justify-between items-center w-[80%] max-w-[1100px] sm:h-[480px] mx-auto rounded-lg shadow-xl overflow-hidden bg-slate-800">
         <i id="closeButton" class="fa-solid fa-xmark absolute top-3 right-3 text-3xl text-slate-950/80 hover:text-red-600 transition duration-200 cursor-pointer"></i>
@@ -134,7 +144,9 @@ export default class App extends ApiActions {
                 <p class="text-zinc-400 text-sm text-center mt-2">${movieGenres}</p>
                 <div class="flex justify-center items-center gap-1 mt-3">
                     <i class="fa-regular fa-star text-yellow-400"></i>
-                    <span class="text-zinc-200">${vote_average.toFixed(2)}</span>
+                    <span class="text-zinc-200">${vote_average.toFixed(
+                      2
+                    )}</span>
                 </div>
             </div>
 
@@ -157,7 +169,9 @@ export default class App extends ApiActions {
                   <p class="text-zinc-400 text-sm text-center mt-2">${movieGenres}</p>
                   <div class="flex justify-center items-center gap-1 mt-3">
                       <i class="fa-regular fa-star text-yellow-400"></i>
-                      <span class="text-zinc-200">${vote_average.toFixed(2)}</span>
+                      <span class="text-zinc-200">${vote_average.toFixed(
+                        2
+                      )}</span>
                   </div>
               </div>
   
@@ -224,7 +238,11 @@ export default class App extends ApiActions {
     button.onclick = (event) => {
       const movieId = event.target.dataset.movieId;
       this.findMovieById(movieId)
-      .then(movie => this.showMovieInModal(movie));
+      .then((movie) => {
+        if(movie){
+          this.showMovieInModal(movie)
+        }
+      }).catch(error => console.log(error.message));
     };
   }
 }
