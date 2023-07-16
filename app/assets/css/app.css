@@ -769,6 +769,7 @@ video {
   width: 100vw;
 }
 
+<<<<<<< HEAD
 .min-w-\[\]{
   min-width: ;
 }
@@ -805,6 +806,8 @@ video {
   min-width: 170px;
 }
 
+=======
+>>>>>>> 3103d6001de42ac2a0a5ad18c869bef88a744af7
 .max-w-\[1100px\]{
   max-width: 1100px;
 }

@@ -68,6 +68,7 @@ export default class App extends ApiActions {
                   </h4>
                 </div>
                 <button class="py-1 px-3 rounded text-red-600 hover:bg-gray-200/10"><i class="fa-solid fa-trash-can"></i></button>
+
               </div>
             `;
   
