@@ -661,6 +661,10 @@ video {
   margin-bottom: 1.5rem;
 }
 
+.ml-2{
+  margin-left: 0.5rem;
+}
+
 .ml-auto{
   margin-left: auto;
 }
@@ -687,10 +691,6 @@ video {
 
 .mt-5{
   margin-top: 1.25rem;
-}
-
-.ml-2{
-  margin-left: 0.5rem;
 }
 
 .block{
@@ -769,45 +769,10 @@ video {
   width: 100vw;
 }
 
-<<<<<<< HEAD
-.min-w-\[\]{
-  min-width: ;
-}
-
-.min-w-\[250px\]{
-  min-width: 250px;
-}
-
-.min-w-full{
-  min-width: 100%;
-}
-
-.min-w-\[230px\]{
-  min-width: 230px;
-}
-
-.min-w-\[200px\]{
-  min-width: 200px;
-}
-
-.min-w-\[2px\]{
-  min-width: 2px;
-}
-
-.min-w-\[12px\]{
-  min-width: 12px;
-}
-
-.min-w-\[180px\]{
-  min-width: 180px;
-}
-
 .min-w-\[170px\]{
   min-width: 170px;
 }
 
-=======
->>>>>>> 3103d6001de42ac2a0a5ad18c869bef88a744af7
 .max-w-\[1100px\]{
   max-width: 1100px;
 }
@@ -925,12 +890,6 @@ video {
   overflow-y: auto;
 }
 
-.truncate{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .rounded{
   border-radius: 0.25rem;
 }
@@ -993,8 +952,8 @@ video {
   background-color: rgb(30 41 59 / 0.4);
 }
 
-.bg-slate-800\/50{
-  background-color: rgb(30 41 59 / 0.5);
+.bg-slate-800\/75{
+  background-color: rgb(30 41 59 / 0.75);
 }
 
 .bg-slate-950{
@@ -1004,10 +963,6 @@ video {
 
 .bg-transparent{
   background-color: transparent;
-}
-
-.bg-slate-800\/75{
-  background-color: rgb(30 41 59 / 0.75);
 }
 
 .fill-slate-200\/30{
