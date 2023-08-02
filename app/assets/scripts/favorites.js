@@ -41,7 +41,7 @@ class Favorites {
     }
     
     all() {
-        const favoritesMovies = JSON.parse(localStorage.getItem('favoritesMovies'));
+        const favoritesMovies = JSON.parse(localStorage.getItem('favoritesMovies')) || 0;
         if(favoritesMovies.length > 0) {
             return favoritesMovies;
         }
