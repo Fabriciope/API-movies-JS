@@ -1,7 +1,7 @@
 ![banner-favoritesMovies](https://github.com/Fabriciope/TechNews/assets/79289410/9783cc62-7ff5-476d-8107-822dcca79a2b)
 
 # Favorites Movies 🎬
- Um projeto feito para consumir uma API de Filmes. É uma aplicação desenvolvida em JavaScript que permite aos usuários obter informações sobre filmes a partir de uma API. Através desta aplicação, os usuários podem pesquisar filmes, visualizar detalhes sobre filmes específicos, listar os mais populares, favoritar entre outras funcionalidades. O projeto utiliza conceitos de programação em JavaScript e interações com APIs RESTful para obter e exibir dados sobre os filmes.
+ Um projeto feito para consumir uma API de Filmes. É uma aplicação desenvolvida em JavaScript que permite aos usuários obter informações sobre filmes a partir de uma API. Através desta aplicação, os usuários podem pesquisar filmes, visualizar detalhes sobre filmes específicos, listar os mais populares, favoritar, entre outras funcionalidades. O projeto utiliza conceitos de programação em JavaScript e interações com APIs RESTful para obter e exibir dados sobre os filmes.
 
 ## Funcionalidades
 ###  Filmes Populares:
